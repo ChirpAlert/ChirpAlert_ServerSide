@@ -12,7 +12,6 @@ passport.use('twitterLogin', new TwitterStrategy({
     callbackURL: process.env.TWITTER_CALLBACK_URL
   },
   function(token, tokenSecret, profile, done) {
-  //  console.log(token, tokenSecret, profile);
      return done(null, profile);
   }
 )); 
@@ -34,14 +33,7 @@ server.use(passport.session());
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated())
     return next();
-    // Return error content: res.jsonp(...) or redirect: res.redirect('/login')
 }
-//server.get('/login', function(request, response){
-//  passport.authenticate('twitterLogin'); 
-//});
-//server.get('/auth/callback', function(request, response){
-//  response.send('congratulations, ' + request.user + ' you are authenticated');
-//})
 server.get('/login/twitter',  
  passport.authenticate('twitterLogin')
 );
@@ -57,7 +49,6 @@ server.get('/auth/callback',
 
 /* GET Twitter View Page */
 server.get('/twitter', isAuthenticated, function(request, response){
-//  response.send('congratulations, you are authenticated');
   response.json(request.user);
 });
 
