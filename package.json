@@ -1,0 +1,23 @@
+{
+  "name": "serverside",
+  "version": "1.0.0",
+  "description": "server for ChirpAlert",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjohnson1000/ServerSide.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjohnson1000/ServerSide/issues"
+  },
+  "homepage": "https://github.com/wjohnson1000/ServerSide#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "passport": "^0.3.2"
+  }
+}
