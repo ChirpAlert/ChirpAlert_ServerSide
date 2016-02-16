@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wjohnson1000/ServerSide#readme",
   "dependencies": {
+    "debunk": "^1.2.0",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
