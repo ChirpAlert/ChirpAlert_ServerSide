@@ -30,25 +30,36 @@ server.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: tr
 server.use(passport.initialize());
 server.use(passport.session());
 
+function sayhi(request, response, next){
+  console.log('hit the server');
+  return next();
+}
+function sayyo(request, response, next){
+  console.log('hit the callback');
+  return next();
+}
+
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated())
     return next();
 }
-server.get('/login/twitter',  
- passport.authenticate('twitterLogin')
+server.get('/login/twitter', sayhi, passport.authenticate('twitterLogin')
 );
 
 // handle the callback after twitter has authenticated the user
 server.get('/auth/callback',
+  sayyo,
   passport.authenticate('twitterLogin', {failureRedirect : '/'}), 
   function(request, response){
-    response.redirect('/twitter')
+    console.log('success redirect');
+    response.redirect('chirpalert://?butt=butt')
   }
 );
 
 
 /* GET Twitter View Page */
 server.get('/twitter', isAuthenticated, function(request, response){
+  console.log('sending request.user!');
   response.json(request.user);
 });
 
