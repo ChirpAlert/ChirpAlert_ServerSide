@@ -25,7 +25,7 @@ passport.deserializeUser(function(obj, done) {
 
 var server = Express();
 
-server.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true}));
+server.use(session({secret: 'big butts', resave: false, saveUninitialized: true, cookie: {}}));
 
 server.use(passport.initialize());
 server.use(passport.session());
@@ -51,17 +51,9 @@ server.get('/auth/callback',
   sayyo,
   passport.authenticate('twitterLogin', {failureRedirect : '/'}), 
   function(request, response){
-    console.log('success redirect');
-    response.redirect('chirpalert://?butt=butt')
+    response.redirect('chirpalert://&session=' + request.session.id);
   }
 );
-
-
-/* GET Twitter View Page */
-server.get('/twitter', isAuthenticated, function(request, response){
-  console.log('sending request.user!');
-  response.json(request.user);
-});
 
 server.listen(PORT, function(){
   console.log('listening');
