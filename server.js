@@ -3,7 +3,8 @@ var Express = require('express')
   , TwitterStrategy = require('passport-twitter').Strategy
   , session = require('express-session')
   , PORT = process.env.PORT || '3000'
-
+  , db_api = require('./db_api')
+  
 require('dotenv').config();
 
 passport.use('twitterLogin', new TwitterStrategy({
@@ -14,7 +15,7 @@ passport.use('twitterLogin', new TwitterStrategy({
   function(token, tokenSecret, profile, done) {
      return done(null, profile);
   }
-)); 
+));
 
 passport.serializeUser(function(user, done) {
  done(null, user);
@@ -49,7 +50,7 @@ server.get('/login/twitter', sayhi, passport.authenticate('twitterLogin')
 // handle the callback after twitter has authenticated the user
 server.get('/auth/callback',
   sayyo,
-  passport.authenticate('twitterLogin', {failureRedirect : '/'}), 
+  passport.authenticate('twitterLogin', {failureRedirect : '/'}),
   function(request, response){
     response.redirect('chirpalert://&session=' + request.session.id);
   }
