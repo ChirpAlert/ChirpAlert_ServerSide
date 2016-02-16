@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/wjohnson1000/ServerSide#readme",
   "dependencies": {
+    "bson": "^0.4.21",
     "debunk": "^1.2.0",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "monk": "^1.0.1",
     "nodemon": "^1.8.1",
     "passport": "^0.3.2",
     "passport-twitter": "^1.0.4"
