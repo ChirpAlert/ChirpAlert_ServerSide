@@ -3,8 +3,8 @@ var Express = require('express')
   , TwitterStrategy = require('passport-twitter').Strategy
   , session = require('express-session')
   , PORT = process.env.PORT || '3000'
-  , db_api = require('./db_api')
-  
+  , routes = require('./routes/router'); 
+
 require('dotenv').config();
 
 passport.use('twitterLogin', new TwitterStrategy({
@@ -30,6 +30,7 @@ server.use(session({secret: 'big butts', resave: false, saveUninitialized: true,
 
 server.use(passport.initialize());
 server.use(passport.session());
+server.use('/', routes);
 
 function sayhi(request, response, next){
   console.log('hit the server');
