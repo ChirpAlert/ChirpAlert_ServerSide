@@ -2,10 +2,40 @@ require('dotenv').config();
 var db = require('monk')(process.env.MONGOLAB_URI);
 var bson = require('bson');
 
-
 var users = db.get('users');
 
-users.insert({id: 'id'});
+module.exports = {
+  addUser: function(twitterId) {
+    return users.insert({
+      id: twitterId
+    });
+  },
+  saveBird: function(birdObj) {
+    return savedBirds.insert({
+      user: twitterId,
+      bird: {
+        id: birdObj.id,
+        name: birdObj.englishName,
+        loc: birdObj.location,
+        time: birdObj.timeSaved,
+        image: birdObj.imageUrl,
+        audio: birdObj.audioUrl
+      }
+    });
+  },
+  getBirdList: function(twitterId){
+    return savedBirds.find({user:twitterId});
+  },
+  deleteBird: function(birdObj){
+    return savedBirds.remove({user: birdObj.twitterId, bird: {id: birdObj.id}});
+  }
+};
+
+
+
+users.insert({
+  id: 'id'
+});
 
 console.log('in the db file');
 
