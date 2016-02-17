@@ -12,34 +12,46 @@ module.exports = {
         id: twitterId
       }).error(function(err){console.log(err)})
         .success(function(doc){
-          console.log(doc)
+          console.log(doc);
           return doc;
         });
   },
   saveBird: function(birdObj) {
-    return savedBirds.insert({
-      user: twitterId,
+    console.log('saving bird');
+    savedBirds.insert({
+      user: birdObj.twitterId,
       bird: {
-        id: birdObj.id,
-        name: birdObj.englishName,
-        loc: birdObj.location,
-        time: birdObj.timeSaved,
-        image: birdObj.imageUrl,
-        audio: birdObj.audioUrl
+        id: birdObj.bird.id,
+        name: birdObj.bird.englishName,
+        loc: birdObj.bird.loc,
+        time: birdObj.bird.timeSaved,
+        image: birdObj.bird.imageUrl,
+        audio: birdObj.bird.audioUrl
       }
+    })
+    .error(function(err){console.log(err)})
+    .success(function(doc){
+      console.log(doc);
     });
   },
   getBirdList: function(twitterId) {
-    return savedBirds.find({
-      user: twitterId
+    console.log('finding birds');
+    savedBirds.find({
+      user: twitterId 
+    })
+    .error(function(err){console.log(err)})
+    .success(function(doc){
+      console.log(doc);
     });
   },
+//need to add 2nd condition (bird id) to this delete
   deleteBird: function(birdObj) {
-    return savedBirds.remove({
+    savedBirds.remove({
       user: birdObj.twitterId,
-      bird: {
-        id: birdObj.id
-      }
+    })
+    .error(function(err){console.log(err)})
+    .success(function(doc){
+      console.log(doc);
     });
   }
 };
