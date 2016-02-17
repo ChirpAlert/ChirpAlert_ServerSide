@@ -6,8 +6,10 @@ var Express = require('express')
 	, jwt = require('jsonwebtoken')
   , routes = require('./routes/router')
   , auth = require('./routes/auth')
-	, db_api = require('./routes/db_api');
-  
+	, db_api = require('./routes/db_api'),
+  , bodyParser = require('body-parser');
+
+
 require('dotenv').config();
 
 passport.use('twitterLogin', new TwitterStrategy({
@@ -59,11 +61,12 @@ var server = Express();
 server.use(session({
   resave: false,
   saveUninitialized: true,
-  secret: 'big butts' 
+  secret: 'big butts'
 }));
 
 server.use(passport.initialize());
 server.use(passport.session());
+server.use(bodyParser.urlencoded({extended: false}));
 
 
 server.use('/', routes);
