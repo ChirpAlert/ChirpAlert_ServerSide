@@ -1,4 +1,4 @@
-var db = require('monk')(process.env.MONGOLAB_URI);
+var db = require('monk')('localhost/chirpalert');
 var bson = require('bson');
 require('dotenv').config();
 
