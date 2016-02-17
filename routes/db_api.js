@@ -11,6 +11,11 @@ module.exports = {
       id: twitterId
     });
   },
+  findUser: function(twitterId){
+    return users.find({
+      id: twitterId
+    });
+  },
   saveBird: function(birdObj) {
     return savedBirds.insert({
       user: birdObj.twitterId,
