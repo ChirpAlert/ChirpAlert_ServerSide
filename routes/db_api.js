@@ -7,18 +7,12 @@ var savedBirds = db.get('savedBirds');
 
 module.exports = {
   addUser: function(twitterId) {
-    console.log('in db api');
-      users.insert({
-        id: twitterId
-      }).error(function(err){console.log(err)})
-        .success(function(doc){
-          console.log(doc);
-          return doc;
-        });
+    return users.insert({
+      id: twitterId
+    })
   },
   saveBird: function(birdObj) {
-    console.log('saving bird');
-    savedBirds.insert({
+    return savedBirds.insert({
       user: birdObj.twitterId,
       bird: {
         id: birdObj.bird.id,
@@ -29,30 +23,17 @@ module.exports = {
         audio: birdObj.bird.audioUrl
       }
     })
-    .error(function(err){console.log(err)})
-    .success(function(doc){
-      console.log(doc);
-    });
   },
   getBirdList: function(twitterId) {
-    console.log('finding birds');
-    savedBirds.find({
+    return savedBirds.find({
       user: twitterId 
     })
-    .error(function(err){console.log(err)})
-    .success(function(doc){
-      console.log(doc);
-    });
   },
 //need to add 2nd condition (bird id) to this delete
   deleteBird: function(birdObj) {
-    savedBirds.remove({
+    return savedBirds.remove({
       user: birdObj.twitterId,
     })
-    .error(function(err){console.log(err)})
-    .success(function(doc){
-      console.log(doc);
-    });
   }
 };
 
