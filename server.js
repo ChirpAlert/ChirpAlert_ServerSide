@@ -5,7 +5,8 @@ var Express = require('express')
   , PORT = process.env.PORT || '3000'
 	, jwt = require('jsonwebtoken')
   , routes = require('./routes/router')
-  , auth = require('./routes/auth');
+  , auth = require('./routes/auth')
+	, db_api = require('./routes/db_api');
   
 require('dotenv').config();
 
@@ -15,8 +16,10 @@ passport.use('twitterLogin', new TwitterStrategy({
     callbackURL: process.env.TWITTER_CALLBACK_URL
   },
   function(token, tokenSecret, profile, done) {
-		findUser(profile.id).then(function(user){
+		checkForUser(profile.id).then(function(user){
     	return done(null, user);
+		}).catch(function(error) {
+			console.log(error);
 		});
   }
 ));
@@ -28,10 +31,27 @@ passport.deserializeUser(function(obj, done) {
  done(null, obj);
 });
 
-function findUser (profile_id) {
+function checkForUser (profile_id) {
+	console.log('checking for user');
 	return new Promise(function(resolve, reject) {
-		//placeholder, query db for real thing
-		resolve(profile_id);
+		db_api.findUser(profile_id)
+			.success(function(user) {
+				if (user.length > 0) {
+					console.log('found user ' + user);
+					resolve(user);
+				} else {
+					console.log('adding user');
+					db_api.addUser(profile_id)
+						.success(function(user) {
+							resolve(user);
+						}).error(function(error){
+							reject(error);
+						});
+				}
+			})
+			.error(function(error) {
+				console.log(error);
+			});
 	});
 }
 
@@ -63,7 +83,7 @@ function isAuthenticated(request, response, next) {
 }
 
 server.get('/test', isAuthenticated, function(request, response) {
-	console.log('authenticated, hello user ' + request.user.id + '!');
+	console.log('authenticated, hello user ' + JSON.parse(request.user.id.id) + '!');
 	response.send('hi');
 });
 
