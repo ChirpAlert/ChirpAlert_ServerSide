@@ -3,12 +3,9 @@ var express = require('express'),
   db_api = require('./db_api')
 
 router.get('/adduser', function(request, response) {
-  db_api.addUser('12345');
-  response.send('data');
-  });
-
-
-
+  db_api.addUser('last user');
+  response.end();
+});
 
 router.get('/savebird', function(request, response) {
 
