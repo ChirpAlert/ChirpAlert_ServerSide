@@ -1,21 +1,24 @@
-var express = require('express')
-  , router = express.Router()
-  , db_api = require('./db_api')
+var express = require('express'),
+  router = express.Router(),
+  db_api = require('./db_api')
 
-router.get('/adduser', function(request, response){
-  db_api.adduser;
-  response.end();
+router.get('/adduser', function(request, response) {
+  db_api.addUser('12345');
+  response.send('data');
+  });
+
+
+
+
+router.get('/savebird', function(request, response) {
+
 });
 
-router.get('/savebird', function(request, response){
+router.get('/getbirdlist', function(request, response) {
 
 });
 
-router.get('/getbirdlist', function(request, response){
-
-});
-
-router.get('/deletebird', function(request, response){
+router.get('/deletebird', function(request, response) {
 
 });
 

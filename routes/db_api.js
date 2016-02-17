@@ -3,11 +3,20 @@ var db = require('monk')(process.env.MONGOLAB_URI);
 var bson = require('bson');
 
 var users = db.get('users');
+var savedBirds = db.get('savedBirds');
 
 module.exports = {
   addUser: function(twitterId) {
-    return users.insert({
+    console.log('in db api');
+    users.insert({
       id: twitterId
+    }, function(err, doc) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      console.log('in route');
+      // return data;
     });
   },
   saveBird: function(birdObj) {
@@ -23,11 +32,18 @@ module.exports = {
       }
     });
   },
-  getBirdList: function(twitterId){
-    return savedBirds.find({user:twitterId});
+  getBirdList: function(twitterId) {
+    return savedBirds.find({
+      user: twitterId
+    });
   },
-  deleteBird: function(birdObj){
-    return savedBirds.remove({user: birdObj.twitterId, bird: {id: birdObj.id}});
+  deleteBird: function(birdObj) {
+    return savedBirds.remove({
+      user: birdObj.twitterId,
+      bird: {
+        id: birdObj.id
+      }
+    });
   }
 };
 
@@ -39,7 +55,7 @@ users.insert({
 
 console.log('in the db file');
 
-db.close();
+// db.close();
 
 
 //save user => attach twitter id to user document
