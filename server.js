@@ -3,21 +3,10 @@ var Express = require('express')
   , TwitterStrategy = require('passport-twitter').Strategy
   , session = require('express-session')
   , PORT = process.env.PORT || '3000'
-  , db_api = require('./db_api')
 	, jwt = require('jsonwebtoken')
-	, BearerStrategy = require('passport-http-bearer').Strategy;
+  , routes = require('./routes/router');
   
 require('dotenv').config();
-
-var server = Express();
-
-server.use(passport.initialize());
-server.use(passport.session());
-server.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: 'big butts' 
-}));
 
 passport.use('twitterLogin', new TwitterStrategy({
     consumerKey: process.env.TWITTER_KEY,
@@ -44,6 +33,19 @@ function findUser (profile_id) {
 		resolve(profile_id);
 	});
 }
+
+var server = Express();
+
+server.use(passport.initialize());
+server.use(passport.session());
+server.use('/', routes);
+
+server.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'big butts' 
+}));
+
 
 function isAuthenticated(request, response, next) {
 	jwt.verify(request.headers.authorization.split(' ')[1], 'big butts', function(err, decoded){
