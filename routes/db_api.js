@@ -9,7 +9,7 @@ module.exports = {
   addUser: function(twitterId) {
     return users.insert({
       id: twitterId
-    })
+    });
   },
   saveBird: function(birdObj) {
     return savedBirds.insert({
@@ -22,18 +22,18 @@ module.exports = {
         image: birdObj.bird.imageUrl,
         audio: birdObj.bird.audioUrl
       }
-    })
+    });
   },
   getBirdList: function(twitterId) {
     return savedBirds.find({
-      user: twitterId 
-    })
+      user: twitterId
+    });
   },
-//need to add 2nd condition (bird id) to this delete
   deleteBird: function(birdObj) {
     return savedBirds.remove({
       user: birdObj.twitterId,
-    })
+         id: birdObj.id
+    });
   }
 };
 
