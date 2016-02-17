@@ -6,7 +6,8 @@ var Express = require('express')
 	, jwt = require('jsonwebtoken')
   , routes = require('./routes/router')
   , auth = require('./routes/auth')
-	, db_api = require('./routes/db_api'),
+  , search = require('./routes/search')
+	, db_api = require('./routes/db_api')
   , bodyParser = require('body-parser');
 
 
@@ -66,11 +67,12 @@ server.use(session({
 
 server.use(passport.initialize());
 server.use(passport.session());
-server.use(bodyParser.urlencoded({extended: false}));
+server.use(bodyParser.json());
 
 
 server.use('/', routes);
 server.use('/auth', auth);
+server.use('/search', search);
 
 function isAuthenticated(request, response, next) {
 	jwt.verify(request.headers.authorization.split(' ')[1], 'big butts', function(err, decoded){
