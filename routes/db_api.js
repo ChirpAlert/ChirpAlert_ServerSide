@@ -8,16 +8,13 @@ var savedBirds = db.get('savedBirds');
 module.exports = {
   addUser: function(twitterId) {
     console.log('in db api');
-    users.insert({
-      id: twitterId
-    }, function(err, doc) {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
-      console.log('in route');
-      // return data;
-    });
+      users.insert({
+        id: twitterId
+      }).error(function(err){console.log(err)})
+        .success(function(doc){
+          console.log(doc)
+          return doc;
+        });
   },
   saveBird: function(birdObj) {
     return savedBirds.insert({
@@ -46,12 +43,6 @@ module.exports = {
     });
   }
 };
-
-
-
-users.insert({
-  id: 'id'
-});
 
 console.log('in the db file');
 
