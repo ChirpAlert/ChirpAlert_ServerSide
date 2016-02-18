@@ -1,3 +1,4 @@
+require('dotenv').config();
 var Express = require('express')
   , passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
@@ -13,7 +14,7 @@ var Express = require('express')
 	, birdPuns = require('bird-puns');
 
 
-require('dotenv').config();
+
 
 passport.use('twitterLogin', new TwitterStrategy({
     consumerKey: process.env.TWITTER_KEY,
@@ -84,3 +85,5 @@ server.get('/pun', function(request, response) {
 server.listen(PORT, function(){
   console.log('listening');
 });
+
+module.exports = server;
