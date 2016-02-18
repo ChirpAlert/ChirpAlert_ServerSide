@@ -9,7 +9,8 @@ var Express = require('express')
   , search = require('./routes/search')
 	, db_api = require('./routes/db_api')
   , bodyParser = require('body-parser')
-  , birds = require('./routes/birds');
+  , birds = require('./routes/birds')
+	, birdPuns = require('bird-puns');
 
 
 require('dotenv').config();
@@ -92,6 +93,10 @@ function isAuthenticated(request, response, next) {
 server.get('/test', isAuthenticated, function(request, response) {
 	console.log('authenticated, hello user ' + JSON.parse(request.user.id.id) + '!');
 	response.send('hi');
+});
+
+server.get('/pun', function(request, response) {
+	response.send(birdPuns.getBirdPun());
 });
 
 server.listen(PORT, function(){
