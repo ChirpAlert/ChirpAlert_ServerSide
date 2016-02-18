@@ -50,11 +50,13 @@ router.post('/savebird', isAuthenticated, function(request, response) {
 
 router.get('/getbirdlist', isAuthenticated, function(request, response) {
   db_api.getBirdList(request.user.id)
-    .error(function(err){console.log(err)})
+    .error(function(err){
+      console.log(err);
+      response.end('failed to save');
+    })
     .success(function(doc){
       response.send(doc);
     });
-  response.end();
 });
 
 //the console log here tells you how many docs were removed
