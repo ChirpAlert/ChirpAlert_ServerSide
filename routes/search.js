@@ -6,7 +6,7 @@ var express = require('express'),
 router.post('/location', function(request, response){
 	var lat = request.body.latitude.toFixed(3);
 	var lon = request.body.longitude.toFixed(2);
-	var queryString = 'http://www.xeno-canto.org/api/2/recordings?query=box:' + (lat - 0.1) + ',' + (lon - 0.1) + ',' + (Number(lat) + 0.1) + ',' + (Number(lon) + 0.1);
+	var queryString = 'http://www.xeno-canto.org/api/2/recordings?query=box:' + (lat - 0.2) + ',' + (lon - 0.2) + ',' + (Number(lat) + 0.2) + ',' + (Number(lon) + 0.2);
 	console.log(queryString);
 	http.get(queryString, function(res) {
 		var birds = '';
@@ -15,7 +15,19 @@ router.post('/location', function(request, response){
 		});
 		res.on('end', function() {
 			var birdData = JSON.parse(birds);
-			response.json(birdData.recordings);
+			var birdsToSend = [];
+			for (var i in birdData.recordings) {
+				if (!birdsToSend.find(function(bird) {
+					if (bird.en === birdData.recordings[i].en) {
+						return true;
+					}
+				})) {
+					birdsToSend.push(birdData.recordings[i]);
+					console.log(birdData.recordings[i].en);
+				}
+			}
+			console.log(birdsToSend.length);
+			response.json(birdsToSend.recordings);
 		});
 	});
 });
