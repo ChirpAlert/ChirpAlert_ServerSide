@@ -8,7 +8,8 @@ var Express = require('express')
   , auth = require('./routes/auth')
   , search = require('./routes/search')
 	, db_api = require('./routes/db_api')
-  , bodyParser = require('body-parser');
+  , bodyParser = require('body-parser')
+  , birds = require('./routes/birds');
 
 
 require('dotenv').config();
@@ -73,6 +74,7 @@ server.use(bodyParser.json());
 server.use('/', routes);
 server.use('/auth', auth);
 server.use('/search', search);
+server.use('/', birds);
 
 function isAuthenticated(request, response, next) {
 	jwt.verify(request.headers.authorization.split(' ')[1], 'big butts', function(err, decoded){
