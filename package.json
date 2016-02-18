@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wjohnson1000/ServerSide#readme",
   "dependencies": {
+    "bird-puns": "0.0.1",
     "body-parser": "^1.15.0",
     "bson": "^0.4.21",
     "debunk": "^1.2.0",
