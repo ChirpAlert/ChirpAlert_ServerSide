@@ -5,7 +5,7 @@ var Express = require('express')
   , session = require('express-session')
   , PORT = process.env.PORT || '3000'
 	, jwt = require('jsonwebtoken')
-  , routes = require('./routes/router')
+  , users = require('./routes/users')
   , auth = require('./routes/auth')
   , search = require('./routes/search')
 	, db_api = require('./routes/db_api')
@@ -73,28 +73,10 @@ server.use(passport.session());
 server.use(bodyParser.json());
 
 
-server.use('/', routes);
+server.use('/users', users);
 server.use('/auth', auth);
 server.use('/search', search);
 server.use('/', birds);
-
-function isAuthenticated(request, response, next) {
-	jwt.verify(request.headers.authorization.split(' ')[1], 'big butts', function(err, decoded){
- 		if (err) {
-			console.log(err);
-		} else {
-			request.user = {
-				id: decoded.user
-			};
-	  	return next();
-		}
-  });
-}
-
-server.get('/test', isAuthenticated, function(request, response) {
-	console.log('authenticated, hello user ' + JSON.parse(request.user.id.id) + '!');
-	response.send('hi');
-});
 
 server.get('/pun', function(request, response) {
 	response.send(birdPuns.getBirdPun());
