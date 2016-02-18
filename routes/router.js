@@ -39,31 +39,5 @@ router.get('/deletebird', function(request, response) {
   response.end();
 });
 
-var newbird = {
-  twitterId: 'bestbird',
-  bird: {
-    id: 3,
-    englishName: 'sparrow',
-    loc: 'denver',
-    timeSaved: 'this morning',
-    imageUrl: 'google it',
-    audioUrl: 'google it'
-  }
-};
-
-// function createBirdObject(){
-//  var url = 'http://www.xeno-canto.org/api/2/recordings' +
-//  http.request({host: ‘www.reddit.com’, path, ‘/.json’}, function (response){
-//       var data = ‘';
-//       response.on(‘data’, function(chunk) {
-//       data += chunk
-//  });
-//  response.on(‘end’, function() {
-//       res.json({data: JSON.parse(data)})
-//  });
-//  }).end();
-//  })
-//
-// };
 
 module.exports = router;
