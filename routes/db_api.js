@@ -1,6 +1,6 @@
 require('dotenv').config();
 var db = require('monk')(process.env.MONGOLAB_URI);
-var bson = require('../bson/');
+var bson = require('bson');
 
 var users = db.get('users');
 var savedBirds = db.get('savedBirds');
