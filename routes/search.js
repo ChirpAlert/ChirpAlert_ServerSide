@@ -27,9 +27,9 @@ router.post('/location', function(request, response){
 				}
 			}
 			console.log(birdsToSend.length);
-			response.json(birdsToSend.recordings);
+			response.json(birdsToSend);
 		});
-	});
+	}); 
 });
 
 module.exports = router;
