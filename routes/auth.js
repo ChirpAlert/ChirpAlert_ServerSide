@@ -18,5 +18,4 @@ router.get('/callback',
   }
 );
 
-
 module.exports = router;

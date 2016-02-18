@@ -24,8 +24,7 @@ module.exports = {
         name: birdObj.bird.englishName,
         loc: birdObj.bird.loc,
         time: birdObj.bird.timeSaved,
-        image: birdObj.bird.imageUrl,
-        audio: birdObj.bird.audioUrl
+        image: birdObj.bird.imageUrl
       }
     });
   },
