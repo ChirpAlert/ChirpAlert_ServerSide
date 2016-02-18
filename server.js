@@ -102,3 +102,5 @@ server.get('/pun', function(request, response) {
 server.listen(PORT, function(){
   console.log('listening');
 });
+
+module.exports = server;
