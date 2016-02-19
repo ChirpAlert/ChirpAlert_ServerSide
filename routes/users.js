@@ -62,8 +62,12 @@ router.get('/getbirdlist', isAuthenticated, function(request, response) {
 });
 
 //the console log here tells you how many docs were removed
-router.get('/deletebird', isAuthenticated, function(request, response) {
-  db_api.deleteBird(newbird)
+router.delete('/deletebird/:id', isAuthenticated, function(request, response) {
+	var birdObject = {
+		twitterId: request.user.id,
+		id: request.params.id
+	};
+  db_api.deleteBird(birdObject)
     .error(function(err){console.log(err)})
     .success(function(doc){
       console.log(doc);
