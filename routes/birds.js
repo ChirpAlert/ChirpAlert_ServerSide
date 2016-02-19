@@ -32,4 +32,20 @@ router.get('/birds', function(request, response) {
   });
 });
 
+router.get('/bird/:id', function(request, response){
+  var queryString = "http://www.xeno-canto.org/api/2/recordings?query=nr:" + request.params.id;
+  http.get(queryString, function(res){
+    var body = '';
+    res.on('data', function(chunk){
+      body += chunk;
+    });
+    res.on('end', function(){
+      var singleBirdData = JSON.parse(body);
+      singleBirdData = singleBirdData.recordings[0];
+      console.log(singleBirdData);
+      response.json(singleBirdData);
+    });
+  });
+});
+
 module.exports = router;
