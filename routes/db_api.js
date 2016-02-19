@@ -36,10 +36,9 @@ module.exports = {
   deleteBird: function(birdObj) {
     return savedBirds.remove({
       user: birdObj.twitterId,
-         id: birdObj.id
+        id: birdObj.id
     });
   }
 };
 
 console.log('in the db file');
-
