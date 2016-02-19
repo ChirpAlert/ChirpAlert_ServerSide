@@ -43,8 +43,10 @@ router.post('/savebird', isAuthenticated, function(request, response) {
       response.end('failed to save');
     })
     .success(function(doc){
-      console.log(doc);
-      response.end('saved');
+		  db_api.getBirdList(request.user.id)
+   			.success(function(birdList){
+    	  	response.json(birdList);
+   	 		});
     });
 });
 
@@ -52,7 +54,7 @@ router.get('/getbirdlist', isAuthenticated, function(request, response) {
   db_api.getBirdList(request.user.id)
     .error(function(err){
       console.log(err);
-      response.end('failed to save');
+      response.end('failed to load');
     })
     .success(function(doc){
       response.send(doc);
