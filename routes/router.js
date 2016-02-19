@@ -10,18 +10,20 @@ router.get('/adduser', function(request, response) {
   MongoClient.connect(url, function(err, db){
     assert.equal(null, err);
     console.log("Connected correctly to server.");
-    //var insertdoc =  function(db, callback){
+    var insertdoc =  function(db, callback){
         db.collection('users').insert({
           id: '235'
         }, function(err, result){
-          assert.equal(err, null);
           console.log("Inserted a document into the restaurants collection.");
-        });
-     // }
-  //  insertdoc(db, function() {
-  //  });
+        })
+    callback()
+      }
+    insertdoc(db, function() {
+    });
     db.close();
+    console.log('connection closed')
   });
+    console.log('response closed')
   response.end();
 });
 
