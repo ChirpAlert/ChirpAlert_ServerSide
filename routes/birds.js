@@ -20,20 +20,29 @@ router.post('/birds', jsonParser, function(request, response) {
     });
     res.on('end', function() {
       var birdId = JSON.parse(body);
-      birdId = birdId.result[0].canonicalName.uid;
-      http.get(queryString2 + birdId + '/images', function(res) {
-        var body = '';
-        res.on('data', function(chunk2) {
-          body += chunk2;
-        });
-        res.on('end', function() {
-          var picId = JSON.parse(body);
-          console.log(picId);
-          picId = picId.result.supertaxa[0].uid;
-          phylopic = phylopic + picId + '.128.png';
-          response.send(phylopic);
-        });
-      });
+			if (birdId.result.length > 0) {
+	      birdId = birdId.result[0].canonicalName.uid;
+	      http.get(queryString2 + birdId + '/images', function(res) {
+	        var body = '';
+	        res.on('data', function(chunk2) {
+	          body += chunk2;
+ 	      	});
+       		res.on('end', function() {
+         		var picId = JSON.parse(body);
+          	console.log(picId);
+						for (var i in picId.result) {
+							if (picId.result[i].length > 0)	{
+          			picId = picId.result[i][0].uid;
+								break;
+							}
+						}
+         		phylopic = phylopic + picId + '.thumb.png';
+         		response.send(phylopic);
+        	});
+      	});			
+			} else {
+				response.send('nope');
+			}
     });
   });
 });
