@@ -8,9 +8,11 @@ router.use(bodyParser.urlencoded({extended: false}))
 router.use(bodyParser.json());
 var jsonParser = bodyParser.json();
 router.post('/birds', jsonParser, function(request, response) {
-  var gen = request.body.gen
-  var species = request.body.species
-  var queryString1 = "http://phylopic.org/api/a/name/search?text=" + gen + "+" + species;
+  console.log(request.body);
+  var gen = request.body.gen;
+  var sp = request.body.sp;
+  var queryString1 = "http://phylopic.org/api/a/name/search?text=" + gen + "+" + sp;
+  console.log('querying ' + queryString1);
   var queryString2 = "http://phylopic.org/api/a/name/";
   var phylopic = 'http://phylopic.org/assets/images/submissions/';
   http.get(queryString1, function(res) {
@@ -39,7 +41,7 @@ router.post('/birds', jsonParser, function(request, response) {
          		phylopic = phylopic + picId + '.thumb.png';
          		response.send(phylopic);
         	});
-      	});			
+      	});
 			} else {
 				response.send('nope');
 			}
