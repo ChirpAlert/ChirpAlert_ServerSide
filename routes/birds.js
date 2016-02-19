@@ -1,11 +1,16 @@
 var express = require('express'),
   router = express.Router(),
   db_api = require('./db_api'),
-  http = require('http');
+  http = require('http'),
+  bodyParser = require('body-parser');
 
-
-router.get('/birds', function(request, response) {
-  var queryString1 = "http://phylopic.org/api/a/name/search?text=tinamus+tao";
+router.use(bodyParser.urlencoded({extended: false}))
+router.use(bodyParser.json());
+var jsonParser = bodyParser.json();
+router.post('/birds', jsonParser, function(request, response) {
+  var gen = request.body.gen
+  var species = request.body.species
+  var queryString1 = "http://phylopic.org/api/a/name/search?text=" + gen + "+" + species;
   var queryString2 = "http://phylopic.org/api/a/name/";
   var phylopic = 'http://phylopic.org/assets/images/submissions/';
   http.get(queryString1, function(res) {
@@ -23,9 +28,10 @@ router.get('/birds', function(request, response) {
         });
         res.on('end', function() {
           var picId = JSON.parse(body);
+          console.log(picId);
           picId = picId.result.supertaxa[0].uid;
-          phylopic = phylopic + picId + '.512.png';
-          response.send("<img src='" + phylopic + "' />");
+          phylopic = phylopic + picId + '.128.png';
+          response.send(phylopic);
         });
       });
     });
