@@ -1,15 +1,28 @@
-require('dotenv').config();
-var db = require('monk')(process.env.MONGOLAB_URI);
-var bson = require('../bson/');
+//var MongoClient = require('mongodb').MongoClient;
+//var assert = require('assert');
+//var url = process.env.MONGOLAB_URI;
+//var ObjectId = require('mongodb').ObjectID;
 
-var users = db.get('users');
-var savedBirds = db.get('savedBirds');
+//MongoClient.connect(url, function(err, db){
+//  assert.equal(null, err);
+//  console.log("Connected correctly to server.");
+//
+//});
+//var users = db.get('users');
+//var savedBirds = db.get('savedBirds');
 
 module.exports = {
-  addUser: function(twitterId) {
-    return users.insert({
-      id: twitterId
-    });
+  addUser: function(twitterId, users) {
+    return function(db, callback){
+      console.log('in db api');
+      users.insertOne({
+        id: twitterId
+      }, function(err, result){
+        assert.equal(err, null);
+        console.log("Inserted a document into the restaurants collection.");
+        callback(); 
+      });
+    };
   },
   findUser: function(twitterId){
     return users.find({
@@ -41,6 +54,4 @@ module.exports = {
     });
   }
 };
-
-console.log('in the db file');
 

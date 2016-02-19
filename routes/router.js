@@ -1,13 +1,27 @@
 var express = require('express'),
   router = express.Router(),
-  db_api = require('./db_api')
+  db_api = require('./db_api'),
+  MongoClient = require('mongodb').MongoClient,
+  assert = require('assert'),
+  url = process.env.MONGOLAB_URI,
+  ObjectId = require('mongodb').ObjectID
 
 router.get('/adduser', function(request, response) {
-  db_api.addUser('billy')
-    .error(function(err){console.log(err)})
-    .success(function(doc){
-      console.log(doc)
-    });
+  MongoClient.connect(url, function(err, db){
+    assert.equal(null, err);
+    console.log("Connected correctly to server.");
+    //var insertdoc =  function(db, callback){
+        db.collection('users').insert({
+          id: '235'
+        }, function(err, result){
+          assert.equal(err, null);
+          console.log("Inserted a document into the restaurants collection.");
+        });
+     // }
+  //  insertdoc(db, function() {
+  //  });
+    db.close();
+  });
   response.end();
 });
 
@@ -38,6 +52,5 @@ router.get('/deletebird', function(request, response) {
     });
   response.end();
 });
-
 
 module.exports = router;
